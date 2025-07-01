@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.S04T02N01.services;
 
+import cat.itacademy.s04.t02.n01.S04T02N01.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.S04T02N01.model.Fruit;
 import cat.itacademy.s04.t02.n01.S04T02N01.repository.FruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,19 @@ public class FruitService {
     }
 
     public Fruit getFruitById(Long id) {
-        return fruitRepository.findById(id).orElse(null);
+        return fruitRepository.findById(id).orElseThrow(() -> new FruitNotFoundException(id));
     }
 
-    public Fruit updateFruit(long id, Fruit fruit) {
-        fruit.setId(id);
-        return fruitRepository.save(fruit);
+    public Fruit updateFruit(long id, Fruit updatedFruit) {
+        Fruit existingFruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException(id));
+
+        existingFruit.setName(updatedFruit.getName());
+        existingFruit.setWeightKilos(updatedFruit.getWeightKilos());
+
+        return fruitRepository.save(existingFruit);
     }
+
 
     public void deleteFruit(Long id) {
         fruitRepository.deleteById(id);
