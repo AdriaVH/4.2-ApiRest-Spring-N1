@@ -40,6 +40,7 @@ public class FruitServiceTest {
         assertThat(fruits.get(0).getName()).isEqualTo("Mango");
     }
 
+
     @Test
     void testGetFruitById() {
         Fruit found = fruitService.getFruitById(fruit.getId());
