@@ -77,7 +77,7 @@ This Spring Boot project implements a CRUD (Create, Read, Update, Delete) for a 
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/AdriaVH/4.2-ApiRest-Spring-N1.git>
    
 2. Open the project in your favorite IDE or terminal.
 
@@ -87,4 +87,4 @@ mvn spring-boot:run
 
 4. Access the API at:
 
-http://localhost:8080/fruits/
+http://localhost:8080/api/fruits/
