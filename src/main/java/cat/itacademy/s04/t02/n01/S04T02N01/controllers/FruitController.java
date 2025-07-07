@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/fruits")
 public class FruitController {
 
-    private FruitService fruitService;
+    private final FruitService fruitService;
 
     @Autowired
     public FruitController (FruitService service) {
