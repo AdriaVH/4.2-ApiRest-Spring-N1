@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Getter@Setter
-public class FruitDTO {
+public class FruitRequestDTO {
 
     @NotBlank(message = "Name is mandatory")
     @Size(max = 50, message = "Name can be max 50 characters")

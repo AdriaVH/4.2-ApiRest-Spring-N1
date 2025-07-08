@@ -1,7 +1,9 @@
 package cat.itacademy.s04.t02.n01.S04T02N01.controllers;
 
+import cat.itacademy.s04.t02.n01.S04T02N01.DTO.FruitMapper;
+import cat.itacademy.s04.t02.n01.S04T02N01.DTO.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.S04T02N01.model.Fruit;
-import cat.itacademy.s04.t02.n01.S04T02N01.DTO.FruitDTO;
+import cat.itacademy.s04.t02.n01.S04T02N01.DTO.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.S04T02N01.services.FruitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,48 +16,49 @@ import java.util.List;
 @RequestMapping("/api/fruits")
 public class FruitController {
 
+    @Autowired
+    private FruitMapper fruitMapper;
+
     private final FruitService fruitService;
 
-    @Autowired
     public FruitController (FruitService service) {
         this.fruitService = service;
     }
-    @PostMapping("/add")
-    public ResponseEntity<Fruit> createFruit(@Valid @RequestBody FruitDTO fruitDTO) {
-        Fruit fruit = fruitService.createFruit(convertToEntity(fruitDTO));
-        return ResponseEntity.ok(fruit);
+    @PostMapping
+    public ResponseEntity<FruitResponseDTO> createFruit(@Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
+        Fruit fruit = fruitMapper.toEntity(fruitRequestDTO);
+        Fruit saved = fruitService.createFruit(fruit);
+        return ResponseEntity.ok(fruitMapper.toDTO(saved));
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<Fruit>> getAllFruits() {
         return ResponseEntity.ok(fruitService.getAllFruits());
     }
 
-    @GetMapping("/getOne/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Fruit> getFruitById(@PathVariable Long id) {
         Fruit fruit = fruitService.getFruitById(id);
         return ResponseEntity.ok(fruit);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Fruit> updateFruit(
             @PathVariable Long id,
-            @Valid @RequestBody FruitDTO fruitDTO) {
+            @Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
 
-        Fruit fruit = fruitService.updateFruit(id, convertToEntity(fruitDTO));
-        return ResponseEntity.ok(fruit);
+        Fruit fruit = fruitService.updateFruit(id, convertToEntity(fruitRequestDTO));
+        return ResponseEntity.ok(fruitToDTO(fruit));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFruit(@PathVariable Long id) {
         fruitService.deleteFruit(id);
         return ResponseEntity.noContent().build();
     }
 
-    private Fruit convertToEntity(FruitDTO dto) {
-        Fruit fruit = new Fruit();
-        fruit.setName(dto.getName());
-        fruit.setWeightKilos(dto.getWeightKilos());
-        return fruit;
+    private FruitResponseDTO fruitToDTO (Fruit fruit) {
+
+        return new FruitResponseDTO(fruit.getId(),fruit.getName(),fruit.getWeightKilos());
     }
 }
