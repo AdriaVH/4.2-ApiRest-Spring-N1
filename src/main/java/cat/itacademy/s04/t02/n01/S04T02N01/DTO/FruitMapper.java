@@ -18,10 +18,10 @@ public class FruitMapper {
         fruit.setWeightKilos(dto.getWeightKilos());
         return fruit;
     }
-
-    public void updateEntityFromDTO(FruitRequestDTO dto, Fruit fruit) {
-        if (dto == null || fruit == null) return;
-        fruit.setName(dto.getName());
-        fruit.setWeightKilos(dto.getWeightKilos());
-    }
+//
+//    public void updateEntityFromDTO(FruitRequestDTO dto, Fruit fruit) {
+//        if (dto == null || fruit == null) return;
+//        fruit.setName(dto.getName());
+//        fruit.setWeightKilos(dto.getWeightKilos());
+//    }
 }

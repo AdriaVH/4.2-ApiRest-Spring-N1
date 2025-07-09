@@ -26,39 +26,29 @@ public class FruitController {
     }
     @PostMapping
     public ResponseEntity<FruitResponseDTO> createFruit(@Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
-        Fruit fruit = fruitMapper.toEntity(fruitRequestDTO);
-        Fruit saved = fruitService.createFruit(fruit);
-        return ResponseEntity.ok(fruitMapper.toDTO(saved));
+        return ResponseEntity.ok(fruitService.createFruit(fruitRequestDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<Fruit>> getAllFruits() {
+    public ResponseEntity<List<FruitResponseDTO>> getAllFruits() {
         return ResponseEntity.ok(fruitService.getAllFruits());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Fruit> getFruitById(@PathVariable Long id) {
-        Fruit fruit = fruitService.getFruitById(id);
-        return ResponseEntity.ok(fruit);
+        return ResponseEntity.ok(fruitService.getFruitById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Fruit> updateFruit(
+    public ResponseEntity<FruitResponseDTO> updateFruit(
             @PathVariable Long id,
             @Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
-
-        Fruit fruit = fruitService.updateFruit(id, convertToEntity(fruitRequestDTO));
-        return ResponseEntity.ok(fruitToDTO(fruit));
+        return ResponseEntity.ok(fruitService.updateFruit(id, fruitRequestDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFruit(@PathVariable Long id) {
         fruitService.deleteFruit(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private FruitResponseDTO fruitToDTO (Fruit fruit) {
-
-        return new FruitResponseDTO(fruit.getId(),fruit.getName(),fruit.getWeightKilos());
     }
 }
