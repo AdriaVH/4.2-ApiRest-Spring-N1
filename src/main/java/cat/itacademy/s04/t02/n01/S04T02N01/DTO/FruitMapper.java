@@ -14,14 +14,8 @@ public class FruitMapper {
     public Fruit toEntity(FruitRequestDTO dto) {
         if (dto == null) return null;
         Fruit fruit = new Fruit();
-        fruit.setName(dto.getName());
-        fruit.setWeightKilos(dto.getWeightKilos());
+        fruit.setName(dto.name());
+        fruit.setWeightKilos(dto.weightKilos());
         return fruit;
     }
-//
-//    public void updateEntityFromDTO(FruitRequestDTO dto, Fruit fruit) {
-//        if (dto == null || fruit == null) return;
-//        fruit.setName(dto.getName());
-//        fruit.setWeightKilos(dto.getWeightKilos());
-//    }
 }
